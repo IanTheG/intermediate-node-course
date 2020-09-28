@@ -31,16 +31,66 @@ app.listen(port, ()=>{
 
 // In the server.js file, you will notice some express routes set up for our users. 
 
-// CREATE
+/* CREATE (old code template)
 app.post('/users',(req,res)=>{
   // User.create()
+}) */
+
+// CREATE (new code)
+/* When you want to make a new document in MongoDB, you can simply call the "create" method on your mongoose model. 
+The first argument is an object containing the values for the new document (stored in req.body). 
+The next argument is a callback function, which handles the response (res) from the database.
+*/
+app.post('/users',(req,res)=>{
+  User.create(
+    {
+      name:req.body.newData.name,
+      email:req.body.newData.email,
+      password:req.body.newData.password
+    },
+    (err,data)=>{
+    if (err){
+      res.json({success: false,message: err})
+    } else if (!data){
+      res.json({success: false,message: "Not Found"})
+    } else {
+      res.json({success: true,data: data})
+    }
+  })
 })
 
 app.route('/users/:id')
-// READ
+/* READ (old code template)
 .get((req,res)=>{
   // User.findById()
+}) */
+
+// READ (new code)
+/* Great, your user has an id of 5f7239451672097c537f1d61. 
+This is what we will use in place of :id, as we make the other requests. 
+Find the "READ" route in our server file, and replace it with this code:
+*/ 
+.get((req,res)=>{
+  User.findById(req.params.id,(err,data)=>{
+    if (err){
+      res.json({
+        success: false,
+        message: err
+      })
+    } else if (!data){
+      res.json({
+        success: false,
+        message: "Not Found"
+      })
+    } else {
+      res.json({
+        success: true,
+        data: data
+      })
+    }
+  })
 })
+
 // UPDATE
 .put((req,res)=>{
   // User.findByIdAndUpdate()
