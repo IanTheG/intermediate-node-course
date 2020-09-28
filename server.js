@@ -135,9 +135,37 @@ We can add an "options" argument before the callback ({new:true}) to make it ret
 })
 
 
-// DELETE
+/* DELETE (old code template)
 .delete((req,res)=>{
   // User.findByIdAndDelete()
+})
+*/
+
+/* To delete a document, you can use the User.findByIdAndDelete method, 
+which takes an id and callback as arguments. */
+// DELETE
+.delete((req,res)=>{
+  User.findByIdAndDelete(
+    req.params.id,
+    (err,data)=>{
+      if (err){
+        res.json({
+          success: false,
+          message: err
+        })
+      } else if (!data){
+        res.json({
+          success: false,
+          message: "Not Found"
+        })
+      } else {
+        res.json({
+          success: true,
+          data: data
+        })
+      }
+    }
+  )
 })
 
 /* Inside each (req,res) callback function we use mongoose methods on our User model to Create, Read, Update, and Delete individual user documents in our users collection. 
