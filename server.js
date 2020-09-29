@@ -1,3 +1,9 @@
+/*
+In this tutorial, you will learn how to connect your server to a NoSQL database called MongoDB. 
+You will also learn how to refactor repetitive code, to make it easier to maintain. 
+By the end of this you have a Rest API that can Create, Read, Update, and Delete (CRUD) documents in MongoDB.
+*/
+
 /* TO GET SERVER RUNNING IN TERMINAL:
 1. Start the server with: 
     brew services start mongodb-community@4.4
